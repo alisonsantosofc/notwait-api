@@ -9,7 +9,7 @@ import AppError from '../errors/AppError';
 
 interface Request {
   user_id: string;
-  avatarFileName: string | undefined;
+  avatarFileName: string;
 }
 
 class UpdateUserAvatarService {
