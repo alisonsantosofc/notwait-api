@@ -4,6 +4,7 @@ import multer from 'multer';
 import uploadConfig from '../config/uploadFiles';
 import ensureAuthenticated from '../middlewares/ensureAuthenticated';
 import CreateUserService from '../services/CreateUserService';
+import UpdateUserAvatarService from '../services/UpdateUserAvatarService';
 
 const usersRouter = Router();
 
@@ -30,8 +31,8 @@ usersRouter.post('/', async (request, response) => {
     };
 
     return response.json(responseUser);
-  } catch (err) {
-    return response.status(400).json({ error: (err as Error).message });
+  } catch (error) {
+    return response.status(400).json({ error: (error as Error).message });
   }
 });
 
@@ -39,10 +40,28 @@ usersRouter.patch(
   '/avatar',
   ensureAuthenticated,
   upload.single('avatar'),
-  (request, response) => {
-    console.log(request.file);
+  async (request, response) => {
+    try {
+      const updateUserAvatar = new UpdateUserAvatarService();
 
-    return response.json({ ok: true });
+      const user = await updateUserAvatar.execute({
+        user_id: request.user.id,
+        avatarFileName: request.file.filename,
+      });
+
+      const responseUser = {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        avatar: user.avatar,
+        created_at: user.created_at,
+        updated_at: user.updated_at,
+      };
+
+      return response.json(responseUser);
+    } catch (error) {
+      return response.status(400).json({ error: (error as Error).message });
+    }
   }
 );
 
