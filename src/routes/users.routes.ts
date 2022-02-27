@@ -46,7 +46,7 @@ usersRouter.patch(
 
       const user = await updateUserAvatar.execute({
         user_id: request.user.id,
-        avatarFileName: request.file.filename,
+        avatarFileName: request.file?.filename,
       });
 
       const responseUser = {

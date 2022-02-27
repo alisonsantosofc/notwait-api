@@ -7,7 +7,7 @@ import User from '../models/User';
 
 interface Request {
   user_id: string;
-  avatarFileName: string;
+  avatarFileName: string | undefined;
 }
 
 class UpdateUserAvatarService {
