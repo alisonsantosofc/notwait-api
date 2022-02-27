@@ -3,7 +3,9 @@ import fs from 'fs';
 import { getRepository } from 'typeorm';
 
 import uploadConfig from '../config/uploadFiles';
+
 import User from '../models/User';
+import AppError from '../errors/AppError';
 
 interface Request {
   user_id: string;
@@ -19,7 +21,7 @@ class UpdateUserAvatarService {
     const tmpFolder = uploadConfig.directory;
 
     if (!user) {
-      throw new Error('User id does not exists or is invalid');
+      throw new AppError('User id does not exists or is invalid', 401);
     }
 
     if (user.avatar) {
