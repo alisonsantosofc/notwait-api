@@ -4,7 +4,7 @@
   "port": 5432,
   "username": "postgres",
   "password": "postgres",
-  "database": "barbertime_db",
+  "database": "psychofy_db",
   "entities": [
     "./src/models/*.ts"
   ],
