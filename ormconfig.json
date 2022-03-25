@@ -3,8 +3,8 @@
   "host": "localhost",
   "port": 5432,
   "username": "postgres",
-  "password": "postgres",
-  "database": "psychofy_db",
+  "password": "docker",
+  "database": "goomind_db",
   "entities": [
     "./src/models/*.ts"
   ],
