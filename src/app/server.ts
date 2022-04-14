@@ -3,12 +3,12 @@ import 'express-async-errors';
 import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 
-import './database';
-
-import uploadConfig from './config/uploadFiles';
+import uploadConfig from '../config/uploadFiles';
 import routes from './routes';
 
 import AppError from './errors/AppError';
+
+import '../typeorm';
 
 const app = express();
 
