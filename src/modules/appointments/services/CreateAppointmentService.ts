@@ -1,10 +1,9 @@
 import { startOfHour } from 'date-fns';
 
 import Appointment from '../entities/Appointment';
-import AppointmentsRepository from '../repositories/AppointmentsRepository';
+import IAppointmentsRepository from '../repositories/IAppointmentsRepository';
 
 import AppError from '../../../app/errors/AppError';
-import IAppointmentsRepository from '../repositories/IAppointmentsRepository';
 
 interface Request {
   providerId: string;
@@ -17,9 +16,7 @@ class CreateAppointmentService {
   public async execute({ providerId, date }: Request): Promise<Appointment> {
     const appointmentDate = startOfHour(date);
 
-    const findAppointmentInSameDate = await this.appointmentsRepository.findByDate(
-      appointmentDate
-    );
+    const findAppointmentInSameDate = await this.appointmentsRepository.findByDate(appointmentDate);
 
     if (findAppointmentInSameDate) {
       throw new AppError('This appointment is already booked', 400);

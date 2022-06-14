@@ -1,13 +1,15 @@
 import { Router } from 'express';
+import UsersRepository from '../repositories/UsersRepository';
 
 import AuthenticateUserService from '../services/AuthenticateUserService';
 
 const sessionsRouter = Router();
+const usersRepository = new UsersRepository();
 
 sessionsRouter.post('/', async (request, response) => {
   const { email, password } = request.body;
 
-  const authenticateUser = new AuthenticateUserService();
+  const authenticateUser = new AuthenticateUserService(usersRepository);
 
   const { user, token } = await authenticateUser.execute({
     email,
@@ -18,8 +20,8 @@ sessionsRouter.post('/', async (request, response) => {
     id: user.id,
     name: user.name,
     email: user.email,
-    created_at: user.created_at,
-    updated_at: user.updated_at,
+    createdAt: user.createdAt,
+    updatedAt: user.updatedAt,
   };
 
   return response.json({ responseUser, token });

@@ -1,22 +1,22 @@
 import path from 'path';
 import fs from 'fs';
-import { getRepository } from 'typeorm';
 
 import uploadConfig from '../../../config/uploadFiles';
 
 import User from '../entities/User';
+import IUsersRepository from '../repositories/IUsersRepository';
 import AppError from '../../../app/errors/AppError';
 
 interface Request {
-  user_id: string;
+  userId: string;
   avatarFileName: string;
 }
 
 class UpdateUserAvatarService {
-  public async execute({ user_id, avatarFileName }: Request): Promise<User> {
-    const usersRepository = getRepository(User);
+  constructor(private usersRepository: IUsersRepository) {}
 
-    const user = await usersRepository.findOne(user_id);
+  public async execute({ userId, avatarFileName }: Request): Promise<User> {
+    const user = await this.usersRepository.findById(userId);
 
     const tmpFolder = uploadConfig.directory;
 
@@ -36,7 +36,7 @@ class UpdateUserAvatarService {
 
     user.avatar = avatarFileName;
 
-    await usersRepository.save(user);
+    await this.usersRepository.update(user);
 
     return user;
   }

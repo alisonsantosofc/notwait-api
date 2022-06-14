@@ -1,39 +1,37 @@
 import { Router } from 'express';
 import multer from 'multer';
 
-import uploadConfig from '../../../config/uploadFiles';
-import ensureAuthenticated from '../../../app/middlewares/ensureAuthenticated';
 import CreateUserService from '../services/CreateUserService';
 import UpdateUserAvatarService from '../services/UpdateUserAvatarService';
+import UsersRepository from '../repositories/UsersRepository';
+
+import uploadConfig from '../../../config/uploadFiles';
+import ensureAuthenticated from '../../../app/middlewares/ensureAuthenticated';
 
 const usersRouter = Router();
-
+const usersRepository = new UsersRepository();
 const upload = multer(uploadConfig);
 
 usersRouter.post('/', async (request, response) => {
-  try {
-    const { name, email, password } = request.body;
+  const { name, email, password } = request.body;
 
-    const createUser = new CreateUserService();
+  const createUser = new CreateUserService(usersRepository);
 
-    const user = await createUser.execute({
-      name,
-      email,
-      password,
-    });
+  const user = await createUser.execute({
+    name,
+    email,
+    password,
+  });
 
-    const responseUser = {
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      created_at: user.created_at,
-      updated_at: user.updated_at,
-    };
+  const responseUser = {
+    id: user.id,
+    name: user.name,
+    email: user.email,
+    createdAt: user.createdAt,
+    updatedAt: user.updatedAt,
+  };
 
-    return response.json(responseUser);
-  } catch (error) {
-    return response.status(400).json({ error: (error as Error).message });
-  }
+  return response.json(responseUser);
 });
 
 usersRouter.patch(
@@ -41,10 +39,10 @@ usersRouter.patch(
   ensureAuthenticated,
   upload.single('avatar'),
   async (request, response) => {
-    const updateUserAvatar = new UpdateUserAvatarService();
+    const updateUserAvatar = new UpdateUserAvatarService(usersRepository);
 
     const user = await updateUserAvatar.execute({
-      user_id: request.user.id,
+      userId: request.user.id,
       avatarFileName: request.file?.filename as string,
     });
 
@@ -53,8 +51,8 @@ usersRouter.patch(
       name: user.name,
       email: user.email,
       avatar: user.avatar,
-      created_at: user.created_at,
-      updated_at: user.updated_at,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
     };
 
     return response.json(responseUser);
