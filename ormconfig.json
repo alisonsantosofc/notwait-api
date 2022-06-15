@@ -3,15 +3,15 @@
   "host": "localhost",
   "port": 5432,
   "username": "postgres",
-  "password": "docker",
-  "database": "goomind_db",
+  "password": "postgres",
+  "database": "barbero_db",
   "entities": [
-    "./src/models/*.ts"
+    "./src/modules/**/entities/*.ts"
   ],
   "migrations": [
-    "./src/database/migrations/*.ts"
+    "./src/typeorm/migrations/*.ts"
   ],
   "cli": {
-    "migrationsDir": "./src/database/migrations"
+    "migrationsDir": "./src/typeorm/migrations"
   }
 }
