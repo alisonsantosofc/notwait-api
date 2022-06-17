@@ -9,11 +9,11 @@ class FakeAppointmentsRepository implements IAppointmentsRepository {
   private appointments: Appointment[] = [];
 
   public async findByDate(date: Date): Promise<Appointment | undefined> {
-    const appointmentFound = this.appointments.find((appointment) =>
+    const findAppointment = this.appointments.find((appointment) =>
       isEqual(appointment.date, date)
     );
 
-    return appointmentFound;
+    return findAppointment;
   }
 
   public async create({
