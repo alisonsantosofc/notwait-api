@@ -14,7 +14,7 @@
 
 **Regras de Negócios**
 
-- O link enviado por email para recuperar a senha, deve expirar em 2 horas.
+- O link enviado por email para recuperar a senha, deve expirar em 14 horas.
 - O usuário precisa confirmar a nova senha ao resetar sua senha.
 
 # Atualização do Perfil

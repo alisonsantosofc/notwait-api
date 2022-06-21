@@ -1,5 +1,5 @@
 <h1 align="center">Beautify API</h1>
-<p align="center">API for barbero app</p>
+<p align="center">API for beautify app</p>
 
 <br>
 
@@ -21,7 +21,7 @@
 
 <div align="center" id="objective">
   <h1>Objective</h1>
-  <p>Server to control users and appointments for barbero app</p>
+  <p>Server to control users and appointments for beautify app</p>
 </div>
 <br>
 
@@ -31,7 +31,7 @@
   *Clone the project and access the folder*
 
   ```bash
-  $ git clone https://github.com/alisonsantosofc/barbero-api
+  $ git clone https://github.com/alisonsantosofc/beautify-api
   $ cd barbero-api
   ```
 
@@ -44,7 +44,7 @@
   *Start the project in development environment*
 
   ```bash
-  $ yarn start
+  $ yarn dev:server
   ```
 </div>
 <br>
