@@ -1,4 +1,5 @@
 import { inject, injectable } from 'tsyringe';
+import path from 'path';
 
 import IUsersRepository from '../repositories/IUsersRepository';
 import IUserTokensRepository from '../repositories/IUserTokensRepository';
@@ -32,10 +33,28 @@ class SendForgotPasswordEmailService {
 
     const { token } = await this.userTokensRepository.generate(user.id);
 
-    await this.emailProvider.sendEmail(
-      email,
-      `Seu pedido de recuperação de senha foi recebido. \n Token de Recuperação: ${token}`
+    // Get handlebars file template from views
+    const forgotPasswordTemplate = path.resolve(
+      __dirname,
+      '..',
+      'views',
+      'forgot_password_email.hbs'
     );
+
+    await this.emailProvider.sendEmail({
+      to: {
+        name: user.name,
+        email: user.email,
+      },
+      subject: '[Notwait] Recuperação de Senha',
+      templateData: {
+        file: forgotPasswordTemplate,
+        variables: {
+          name: user.name,
+          link: `http://localhost:3000/reset-password?token=${token}`,
+        },
+      },
+    });
   }
 }
 

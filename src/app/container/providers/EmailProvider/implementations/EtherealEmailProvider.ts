@@ -1,11 +1,18 @@
 import nodemailer, { Transporter } from 'nodemailer';
+import { inject, injectable } from 'tsyringe';
+import IEmailTemplateProvider from '../../EmailTemplateProvider/models/IEmailTemplateProvider';
+import ISendEmailDTO from '../dtos/ISendEmailDTO';
 
 import IEmailProvider from '../models/IEmailProvider';
 
+@injectable()
 class EtherealEmailProvider implements IEmailProvider {
   private client: Transporter;
 
-  constructor() {
+  constructor(
+    @inject('EmailTemplateProvider')
+    private emailTemplateProvider: IEmailTemplateProvider
+  ) {
     nodemailer.createTestAccount().then((account) => {
       const transporter = nodemailer.createTransport({
         host: account.smtp.host,
@@ -21,13 +28,23 @@ class EtherealEmailProvider implements IEmailProvider {
     });
   }
 
-  public async sendEmail(to: string, body: string): Promise<void> {
+  public async sendEmail({
+    to,
+    from,
+    subject,
+    templateData,
+  }: ISendEmailDTO): Promise<void> {
     const message = await this.client.sendMail({
-      from: '"Suporte Equipe Beurifu 👨‍🔧️" <suportebeurifu@gmail.com>', // sender address
-      to, // list of receivers
-      subject: 'Recuperação de Senha', // Subject line
-      text: body, // plain text body
-      // html: '<b>Hello world?</b>', // html body
+      from: {
+        name: from?.name || 'Suporte Equipe Notwait 👨‍🔧️',
+        address: from?.email || 'suportenotwait@gmail.com',
+      },
+      to: {
+        name: to.name,
+        address: to.email,
+      },
+      subject,
+      html: await this.emailTemplateProvider.parse(templateData),
     });
 
     // Preview only available when sending through an Ethereal account
