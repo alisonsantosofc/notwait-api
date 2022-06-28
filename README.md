@@ -1,4 +1,4 @@
-<h1 align="center">Beautify API</h1>
+<h1 align="center">Beloo API</h1>
 <p align="center">API for beautify app</p>
 
 <br>
@@ -21,7 +21,7 @@
 
 <div align="center" id="objective">
   <h1>Objective</h1>
-  <p>Server to control users and appointments for beautify app</p>
+  <p>Server to control users and appointments for beloo app</p>
 </div>
 <br>
 
@@ -31,8 +31,8 @@
   *Clone the project and access the folder*
 
   ```bash
-  $ git clone https://github.com/alisonsantosofc/beautify-api
-  $ cd barbero-api
+  $ git clone https://github.com/alisonsantosofc/beloo-api
+  $ cd beloo-api
   ```
 
   *Install the dependencies*
