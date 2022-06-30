@@ -3,6 +3,7 @@ import { v4 as uuid } from 'uuid';
 import User from '../../entities/User';
 import IUsersRepository from '../IUsersRepository';
 import ICreateUserDTO from '../../dtos/ICreateUserDTO';
+import IFindAllProvidersDTO from '../../dtos/IFindAllProvidersDTO';
 
 class UsersRepository implements IUsersRepository {
   private users: User[] = [];
@@ -17,6 +18,18 @@ class UsersRepository implements IUsersRepository {
     const findUser = this.users.find((user) => user.email === email);
 
     return findUser;
+  }
+
+  public async findAllProviders({
+    exceptUserId,
+  }: IFindAllProvidersDTO): Promise<User[]> {
+    let { users } = this;
+
+    if (exceptUserId) {
+      users = this.users.filter((user) => user.id !== exceptUserId);
+    }
+
+    return users;
   }
 
   public async create({

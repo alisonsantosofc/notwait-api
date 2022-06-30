@@ -12,11 +12,11 @@ interface TokenPayload {
 }
 
 function ensureAuthenticated(
-  request: Request,
-  response: Response,
+  req: Request,
+  res: Response,
   next: NextFunction
 ): void {
-  const authHeader = request.headers.authorization;
+  const authHeader = req.headers.authorization;
 
   if (!authHeader) {
     throw new AppError('JWT token is missing', 401);
@@ -31,7 +31,7 @@ function ensureAuthenticated(
 
     const { sub } = decodedToken as TokenPayload;
 
-    request.user = {
+    req.user = {
       id: sub,
     };
 
