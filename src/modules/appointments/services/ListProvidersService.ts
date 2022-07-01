@@ -6,7 +6,6 @@ import IUsersRepository from '../../users/repositories/IUsersRepository';
 interface Request {
   userId: string;
 }
-
 @injectable()
 class ListProvidersService {
   constructor(
