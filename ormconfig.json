@@ -4,7 +4,7 @@
   "port": 5432,
   "username": "postgres",
   "password": "postgres",
-  "database": "beautify_db",
+  "database": "notwait_db",
   "entities": [
     "./src/modules/**/entities/*.ts"
   ],
