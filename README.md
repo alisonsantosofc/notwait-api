@@ -1,5 +1,5 @@
 <h1 align="center">Notwait API</h1>
-<p align="center">API for beautify app</p>
+<p align="center">API for appointments app</p>
 
 <br>
 
