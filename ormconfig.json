@@ -1,17 +1,31 @@
-{
-  "type": "postgres",
-  "host": "localhost",
-  "port": 5432,
-  "username": "postgres",
-  "password": "postgres",
-  "database": "notwait_db",
-  "entities": [
-    "./src/modules/**/entities/*.ts"
-  ],
-  "migrations": [
-    "./src/typeorm/migrations/*.ts"
-  ],
-  "cli": {
-    "migrationsDir": "./src/typeorm/migrations"
+[
+  {
+    "name": "default",
+    "type": "postgres",
+    "host": "localhost",
+    "port": 5432,
+    "username": "postgres",
+    "password": "postgres",
+    "database": "notwait_db",
+    "entities": [
+      "./src/modules/**/entities/*.ts"
+    ],
+    "migrations": [
+      "./src/typeorm/migrations/*.ts"
+    ],
+    "cli": {
+      "migrationsDir": "./src/typeorm/migrations"
+    }
+  },
+  {
+    "name": "mongodb",
+    "type": "mongodb",
+    "host": "localhost",
+    "port": 27017,
+    "database": "notwait_db",
+    "useUnifiedTopology": true,
+    "entities": [
+      "./src/modules/**/schemas/*.ts"
+    ]
   }
-}
+]
